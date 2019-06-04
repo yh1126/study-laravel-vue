@@ -1,0 +1,32 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+### https://raw.github.com/github/gitignore/5a7a3cddf3fcecb926a84019f58abf0c43730a61/Laravel.gitignore
+
+vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+
+
