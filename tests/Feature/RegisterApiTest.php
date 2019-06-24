@@ -9,13 +9,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterApiTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
     public function should_新しいユーザーを作成して返却する()
     {
-        use RefreshDatabase;
-
         $data = [
             'name' => 'vuesplash user',
             'email' => 'dummy@email.com',
