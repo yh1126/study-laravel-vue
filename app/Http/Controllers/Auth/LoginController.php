@@ -42,4 +42,13 @@ class LoginController extends Controller
     {
         return $user;
     }
+
+    // AuthenticatesUsersで定義されているloggedOutをオーバーライドしてレスポンスをカスタマイズ
+    protected function loggedOut(Request $request)
+    {
+        // セッションを再作成する
+        $request->session()->regenerate();
+
+        return response()->json();
+    }
 }

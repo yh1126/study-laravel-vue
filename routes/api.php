@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 // ログイン
 Route::post('/login', 'Auth\LoginController@login')->name('login');
+// nameはrouteに名前をつけることができる
+// ログアウト
+Route::post('/logout', 'Auth\LoginCOntroller@logout')->name('logout');
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
