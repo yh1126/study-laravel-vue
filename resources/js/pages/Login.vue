@@ -14,7 +14,18 @@
       >Register</li>
     </ul>
     <!-- tabという変数の値によって表示する内容を切り替える -->
-    <div class="panel" v-show="tab === 1">Login Form</div>
+    <div class="panel" v-show="tab === 1">
+      <form class="form">
+        <label for="login-email">Email</label>
+        <input type="text" class="form__item" id="login-email" v-model="loginForm.email">
+        <label for="login-password">password</label>
+        <input type="password" class="form__item" id="login-password" v-model="loginForm.password">
+        <div class="form__button">
+          <button type="submit" class="button button--inverse">Login</button>
+        </div>
+      </form>
+    </div>
+
     <div class="panel" v-show="tab === 2">Register Form</div>
   </div>
 </template>
@@ -23,7 +34,11 @@
 export default {
   data () {
     return {
-      tab: 1
+      tab: 1,
+      loginForm: {
+        email: '',
+        password: ''
+      }
     }
   }
 }
