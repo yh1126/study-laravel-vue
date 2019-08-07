@@ -2,6 +2,7 @@
   <div>
     <!-- header navigation -->
     <header>
+      <!--Navコンポーネントの呼び出し -->
       <Navbar />
     </header>
     <main>
@@ -9,6 +10,7 @@
         <RouterView />
       </div>
     </main>
+      <!--Footerコンポーネントの呼び出し -->
     <Footer />
   </div>
 </template>
