@@ -4,7 +4,11 @@ const state = {
   user: null
 }
 
-const getters = {}
+const getters = {
+  // !!を二つ使うときにundefindやnullのときにbooleanを返すようにする
+  check: state => !! state.user,
+  username: state => state.user ? state.user.name : ''
+}
 
 const mutations = {
   // ミューテーションの第一引数は必ずステート
