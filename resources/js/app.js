@@ -26,13 +26,18 @@ import router from './router'
 import App from './App.vue'
 import store from './store'
 
+// 非同期処理を await するためには async メソッドの内部にいる必要があるため、起動処理を createApp 関数にまとめる
+const createApp = async () => {
+  await store.dispatch('auth/currentUser')
 
+  // Vueインスタンスの生成
+  new Vue({
+    el: '#app',
+    router, // ルーティングの定義を読み込む
+    store, // 状態を管理するためにstoreを作成
+    components: { App }, // ルートコンポーネントの使用を宣言する
+    template: '<App />' // ルートコンポーネントを描画する
+  })
+}
 
-// Vueインスタンスの生成
-new Vue({
-  el: '#app',
-  router, // ルーティングの定義を読み込む
-  store, // 状態を管理するためにstoreを作成
-  components: { App }, // ルートコンポーネントの使用を宣言する
-  template: '<App />' // ルートコンポーネントを描画する
-})
+createApp()
