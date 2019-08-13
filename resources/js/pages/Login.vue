@@ -61,11 +61,19 @@ export default {
       }
     }
   },
+  computed: {
+    apiStatus () {
+      return this.$store.state.auth.apiStatus
+    }
+  },
   methods: {
     async login () {
       await this.$store.dispatch('auth/login', this.loginForm)
 
-      this.$router.push('/')
+      if (this.apiStatus) {
+        // トップページに移動する
+        this.$router.push('/')
+      }
     },
     async register () {
       // dispatchはauthストアのregisterアクションを呼び出す
