@@ -29,7 +29,7 @@ export default {
     isLogin () {
       return this.$store.getters['auth/check']
     },
-    usernme () {
+    username () {
       return this.$store.getters['auth/username']
     }
   }
