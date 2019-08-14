@@ -16,6 +16,7 @@
     <!-- tabという変数の値によって表示する内容を切り替える -->
     <div class="panel" v-show="tab === 1">
       <form class="form" @submit.prevent="login">
+        <!-- error message -->
         <div v-if="loginErrors" class="errors">
           <ul v-if="loginErrors.email">
             <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
@@ -37,6 +38,16 @@
 
     <div class="panel" v-show="tab === 2">
       <form class="form" @submit.prevent="register">
+        <!-- error message -->
+        <div v-if="registerErrors" class="errors">
+          <ul v-if="registerErrors.email">
+            <li v-for="msg in registerErrors.email" :key="msg">{{ msg }}</li>
+          </ul>
+          <ul v-if="registerErrors.password">
+            <li v-for="msg in registerErrors.password" :key=msg>{{ msg }}</li>
+          </ul>
+        </div>
+
         <label for="username">Name</label>
         <input type="text" class="form__item" id="username" v-model="registerForm.name">
         <label for="email">Email</label>
@@ -75,10 +86,12 @@ export default {
   computed: {
     ...mapState({
       apiStatus: state => state.auth.apiStatus,
-      loginErrors: state => state.auth.loginErrorMessages
+      loginErrors: state => state.auth.loginErrorMessages,
+      registerErrors: state => state.auth.registerErrorMessages
     })
   },
   methods: {
+    // ログイン処理
     async login () {
       await this.$store.dispatch('auth/login', this.loginForm)
 
@@ -87,15 +100,19 @@ export default {
         this.$router.push('/')
       }
     },
+    // 会員登録処理
     async register () {
       // dispatchはauthストアのregisterアクションを呼び出す
       await this.$store.dispatch('auth/register', this.registerForm)
 
-      // トップページに移動する
-      this.$router.push('/')
+      if (this.apiStatus) {
+        // トップページに移動する
+        this.$router.push('/')
+      }
     },
     clearError () {
       this.$store.commit('auth/setLoginErrorMessages', null)
+      this.$store.commit('auth/setRegisterErrorMessages', null)
     }
   },
   created () {
