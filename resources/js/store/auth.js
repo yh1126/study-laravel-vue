@@ -70,7 +70,7 @@ const actions = {
   },
 
   async logout (context, data) {
-    context.axioscommit('setApiStatus', null)
+    context.commit('setApiStatus', null)
     const response = await axios.post('/api/logout', data)
 
     if (response.status === OK) {
