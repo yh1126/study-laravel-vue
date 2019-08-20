@@ -24,6 +24,7 @@ class PhotoController extends Controller
     public function create(StorePhoto $request)
     {
         // 投稿写真の拡張子を取得する
+        // photoはFileオブジェクトでFileオブジェクトはFileHelperに定義されているメソッドを使用できる
         $extension = $request->photo->extension();
 
         $photo = new Photo();
