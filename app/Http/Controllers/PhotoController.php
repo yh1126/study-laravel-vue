@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePhoto;
 use App\Models\Photo;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -21,7 +24,7 @@ class PhotoController extends Controller
     public function create(StorePhoto $request)
     {
         // 投稿写真の拡張子を取得する
-        $extension = $request->photo->extention();
+        $extension = $request->photo->extension();
 
         $photo = new Photo();
 
