@@ -20,6 +20,8 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginCOntroller@logout')->name('logout');
 
+Route::post('/photos', 'PhotoController@index')->name('photo.create');
+
 Route::get('/user', function () {
     return Auth::user();
 })->name('user');
