@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use App\User;
+use App\Models\Photo;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Http\UploadedFile;
 
 class PhotoSubmitApiTest extends TestCase
 {
