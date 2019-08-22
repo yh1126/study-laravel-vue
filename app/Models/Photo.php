@@ -52,6 +52,4 @@ class Photo extends Model
 
         return $id;
     }
-
-
 }
