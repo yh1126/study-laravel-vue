@@ -73,6 +73,7 @@ export default {
 
       this.reset()
       this.$emit('input', false)
+      $this.$router.push('/photos/${response.data.id')
     }
   }
 };
