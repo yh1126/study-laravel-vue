@@ -82,7 +82,7 @@ export default {
       formData.append('photo', this.photo)
       const response = await axios.post('/api/photos', formData)
 
-      if (response.status !== UNPROCESSABLE_ENTITY) {
+      if (response.status === UNPROCESSABLE_ENTITY) {
         this.errors = response.data.errors
         return false
       }
