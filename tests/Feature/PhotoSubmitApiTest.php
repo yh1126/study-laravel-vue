@@ -44,8 +44,8 @@ class PhotoSubmitApiTest extends TestCase
         // 写真のIDが12桁のランダムな文字列であること
         $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
 
-        // DBに挿入されたファイル名のファイルがストレージに保存されていること
-        Storage::cloud()->assertExists($photo->filename);
+        // DBに挿入されたファイル名のファイル'がストレージに保存されていること
+        Storage::cloud()->assertExists('photos/' . $photo->filename);
     }
 
     /**
