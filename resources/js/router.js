@@ -19,7 +19,7 @@ const routes = [
     component: PhotoList
   },
   {
-    path: '/photos:id',
+    path: '/photos/:id',
     component: PhotoDetail,
     // 変数部分:idをpropsとして受け取るためtrueを設定する
     props: true
