@@ -3,7 +3,7 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use App\Models\Photo;
-use App\User;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(Photo::class, function (Faker $faker) {
