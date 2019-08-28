@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    // hiddenに要素を追加しても良かったが、こっちの方が項目数も少なく何を表示するかわかりやすいのでvisibleを使用する
+    protected $visible = [
+        'name',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
