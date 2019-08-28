@@ -15,7 +15,19 @@ class PhotoController extends Controller
     public function __construct()
     {
         // 認証が必要
-        $this->middleware('auth');
+        // しかし、indexだけメソッドだけ認証なしでも観れるようにする
+        // コントローラを分けた方が良さそうな気がするなぁ
+        $this->middleware('auth')->except(['index']);
+    }
+
+    public function index()
+    {
+        // TODO：serviceに切り出したい
+        $photos = Photo::with(['owner'])
+            ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
+
+        // コントローラからインスタンスをreturnすると自動的にjsonに変換されてレスポンスが生成される
+        return $photos;
     }
 
     /**
