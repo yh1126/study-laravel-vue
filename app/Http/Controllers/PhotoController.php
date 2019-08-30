@@ -17,7 +17,7 @@ class PhotoController extends Controller
         // 認証が必要
         // しかし、indexだけメソッドだけ認証なしでも観れるようにする
         // コントローラを分けた方が良さそうな気がするなぁ
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'download']);
     }
 
     public function index()
@@ -77,5 +77,20 @@ class PhotoController extends Controller
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する
         return response($photo, 201);
+    }
+
+    public function download(Photo $photo)
+    {
+        // 写真の存在をチェックする
+        if (! Storage::cloud()->exists($photo->filename)) {
+            abort(404);
+        }
+
+        $headers = [
+            'Content-type' => 'application/octet-stream', //ファイルの種類は無視するようなMIMEタイプを返す
+            'Content-Disposition' => 'attachment: filename="' . $photo->filename . '"',
+        ];
+
+        return response(Storage::cloud()->get($photo->filename), 200, $headers);
     }
 }
