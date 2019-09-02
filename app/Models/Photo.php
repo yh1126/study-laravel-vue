@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Storage;
 
 class Photo extends Model
 {
+    /** IDの桁数 */
+    const ID_LENGTH = 12;
+
     /**
      * プライマリキーの型を変更する
      * */
@@ -35,8 +38,7 @@ class Photo extends Model
         'id', 'owner', 'url',
     ];
 
-    /** IDの桁数 */
-    const ID_LENGTH = 12;
+    protected $perPage = 15;
 
     public function __construct(array $attributes = [])
     {
