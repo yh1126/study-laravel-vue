@@ -17,7 +17,7 @@ class PhotoController extends Controller
         // 認証が必要
         // しかし、indexだけメソッドだけ認証なしでも観れるようにする
         // コントローラを分けた方が良さそうな気がするなぁ
-        $this->middleware('auth')->except(['index', 'download']);
+        $this->middleware('auth')->except(['index', 'show', 'download']);
     }
 
     public function index()
@@ -28,6 +28,13 @@ class PhotoController extends Controller
 
         // コントローラからインスタンスをreturnすると自動的にjsonに変換されてレスポンスが生成される
         return $photos;
+    }
+
+    public function show(string $id)
+    {
+        $photo = Photo::where('id', $id)->with(['owner'])->first();
+
+        return $photo ?? abort(404);
     }
 
     /**
@@ -82,15 +89,15 @@ class PhotoController extends Controller
     public function download(Photo $photo)
     {
         // 写真の存在をチェックする
-        if (! Storage::cloud()->exists($photo->filename)) {
+        if (! Storage::cloud()->exists('photos/' . $photo->filename)) {
             abort(404);
         }
 
         $headers = [
             'Content-type' => 'application/octet-stream', //ファイルの種類は無視するようなMIMEタイプを返す
-            'Content-Disposition' => 'attachment: filename="' . $photo->filename . '"',
+            'Content-Disposition' => 'attachment; filename="' . $photo->filename . '"',
         ];
 
-        return response(Storage::cloud()->get($photo->filename), 200, $headers);
+        return response(Storage::cloud()->get('photos/' . $photo->filename), 200, $headers);
     }
 }
