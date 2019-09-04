@@ -29,7 +29,7 @@
           @click.stop
           :href="`/photos/${item.id}/download`"
         >
-          <i class="icon icon-md-arrow-round-down"></i>
+          <i class="icon icon-md-arrow-round-down"></i>Download
         </a>
       </div>
       <div class="photo__username">
