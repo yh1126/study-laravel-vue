@@ -15,7 +15,7 @@ class Photo extends Model
      * */
     protected $keyType = 'string';
 
-    /** 
+    /**
      * JSONに含める属性を追加する
      * HasAttributesを見る限りappendメソッドでも追加できそう
      */
@@ -33,9 +33,11 @@ class Photo extends Model
     /**
      * JSONに含める属性
      * hiddenと同じ表現をしている
+     * 基本的にはvisibleを使用するようにする
+     * 理由：hiddenに項目を定義する場合、項目が増えた時に漏れが出る可能性が高くなる & 可読性が下がる
      */
     protected $visible = [
-        'id', 'owner', 'url',
+        'id', 'owner', 'url', 'comments',
     ];
 
     protected $perPage = 15;
@@ -55,6 +57,11 @@ class Photo extends Model
         // メソッド名がuserではないため、第二引数に外部キーを、第三引数に親モデルの主キー、
         // 第四引数にテーブル名？を指定する
         return $this->belongsTo('App\Models\User', 'user_id', 'id', 'users');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->orderBy('id', 'desc');
     }
 
     public function getUrlAttribute()
