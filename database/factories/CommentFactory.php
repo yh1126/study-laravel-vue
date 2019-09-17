@@ -2,11 +2,11 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Model;
+use App\Models\Comment;
 use App\Models\User;
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(Comment::class, function (Faker $faker) {
     return [
         'content' => substr($faker->text, 0, 500),
         'user_id' => function () {
