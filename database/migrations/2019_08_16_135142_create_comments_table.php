@@ -16,7 +16,8 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('photo_id');
-            $table->unsignedInteger('user_id');
+            // $table->unsignedInteger('user_id') でやると符号なしのただのint型になる;
+            $table->bigInteger('user_id')->unsigned();
             $table->text('content')->comment('コメント');
             $table->timestamps();
 

@@ -15,7 +15,8 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->string('id')->primary(); //idをstringにするのはなぜだ...
-            $table->unsignedInteger('user_id');
+            // $table->unsignedInteger('user_id') でやると符号なしのただのint型になる;
+            $table->bigInteger('user_id')->unsigned();
             $table->string('filename');
             $table->timestamps();
 
