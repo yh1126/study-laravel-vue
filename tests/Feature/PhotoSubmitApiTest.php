@@ -48,27 +48,6 @@ class PhotoSubmitApiTest extends TestCase
         Storage::cloud()->assertExists('photos/' . $photo->filename);
     }
 
-    /**
-     * @test
-     */
-    public function hould_データベースエラーの場合はファイルを保存しない()
-    {
-        // DBエラーを起こす
-        Schema::drop('photos');
-
-        Storage::fake('s3');
-
-        $response = $this->actingAs($this->user)
-            ->json('POST', route('photo.create'), [
-                'photo' => UploadedFile::fake()->image('photo.jpg'),
-            ]);
-
-        // レスポンスが500(INTERNAL SERVER ERROR)であること
-        $response->assertStatus(500);
-
-        // ストレージにファイルが保存されていないこと
-        $this->assertEquals(0, count(Storage::cloud()->files()));
-    }
 
     /**
      * @test
