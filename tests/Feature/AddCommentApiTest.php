@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Photo;
 use App\Models\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddCommentApiTest extends TestCase
@@ -30,10 +29,11 @@ class AddCommentApiTest extends TestCase
         $content = 'sample content';
 
         $response = $this->actingAs($this->user)
-            ->json('POST', route('photo.coment', [
+            ->json('POST', route('photo.comment', [
                 'photo' => $photo->id,
             ]), compact('content'));
-        $comments = $pthoto->comments()->get();
+
+        $comments = $photo->comments()->get();
 
         // 記事に従って書いてるけど、テスト三分割した方が良さそう
         $response->assertStatus(201)

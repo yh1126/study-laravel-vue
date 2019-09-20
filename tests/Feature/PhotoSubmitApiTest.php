@@ -55,13 +55,14 @@ class PhotoSubmitApiTest extends TestCase
     public function should_ファイル保存エラーの場合はDBへの挿入はしない()
     {
         // ストレージをモックして保存時にエラーを起こさせる
+        // nullを渡すとコントローラーのputFileAsでエラーが発生する
         Storage::shouldReceive('cloud')
             ->once()
             ->andReturnNull();
 
         $response = $this->actingAs($this->user)
             ->json('POST', route('photo.create'), [
-                'photo' => UploadedFile::fake()->image('ophoto.jpg'),
+                'photo' => UploadedFile::fake()->image('photo.jpg'),
             ]);
 
         // レスポンスが500(INTERNAL SERVER ERROR)であること
