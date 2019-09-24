@@ -28,6 +28,11 @@ Route::get('/photos/{id}', 'PhotoController@show')->name('photo.show');
 
 Route::post('/photos/{photo}/comments', 'PhotoController@addComment')->name('photo.comment');
 
+// いいね
+Route::put('/photos/{id}/like', 'PhotoController@like')->name('photp.like');
+// いいね解除
+Route::delete('/photos/{id}/like', 'PhotoController@unlike');
+
 Route::get('/user', function () {
     return Auth::user();
 })->name('user');
