@@ -48,4 +48,7 @@ class PhotoDetailApiTest extends TestCase
                 'likes_count' => 0,
             ]);
     }
+
+    // @TODO: ログインしている状態でいいねをした画像を取得したときにliked_by_userがtrueになる
+    // ↑のテストを書いたほうがgetLikedByUserAttributeのテストになる
 }
