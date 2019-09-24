@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePhoto;
+use App\Http\Requests\StoreComment;
+use App\Models\Comment;
 use App\Models\Photo;
 use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,7 @@ class PhotoController extends Controller
 
     public function show(string $id)
     {
-        $photo = Photo::where('id', $id)->with(['owner'])->first();
+        $photo = Photo::where('id', $id)->with(['owner', 'comments.author'])->first();
 
         return $photo ?? abort(404);
     }
@@ -65,7 +67,6 @@ class PhotoController extends Controller
             Log::error($exception);
             throw $exception;
         }
-
         // データベースエラー時にファイル削除を行うため
         // トランザクションを利用する
         DB::beginTransaction();
@@ -99,5 +100,21 @@ class PhotoController extends Controller
         ];
 
         return response(Storage::cloud()->get('photos/' . $photo->filename), 200, $headers);
+    }
+
+    public function addComment(Photo $photo, StoreComment $request)
+    {
+        $comment = new Comment();
+        // コメント作成処理などはサービスに切り出したほうがテストしやすそう
+        // 後、この処理ってオブジェクト破壊だった気がするのでテスト以外でこの処理は書きたくない
+        $comment->content = $request->get('content');
+        $comment->user_id = Auth::user()->id;
+        $photo->comments()->save($comment);
+
+        // authorリレーションをロードするためにコメントを取得しなおす
+        // 別のメソッドに切り出すべき
+        // 以前このメソッドでコメントの追加とコメントの取得をしているので仕事しすぎ
+        $new_comment = Comment::where('id', $comment->id)->with('author')->first();
+        return response($new_comment, 201);
     }
 }
