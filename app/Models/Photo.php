@@ -64,6 +64,13 @@ class Photo extends Model
         return $this->hasMany(Comment::class)->orderBy('id', 'desc');
     }
 
+    // likesテーブルは中間テーブルとして、photosテーブルとusersテーブルの多対多の関連性を定義する
+    public function likes()
+    {
+        // 中間テーブルにタイムスタンプを追加する
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
+
     public function getUrlAttribute()
     {
         // クラウドストレージのurlメソッドはs3の公開URLを返却する
