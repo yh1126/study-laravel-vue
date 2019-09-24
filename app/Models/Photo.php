@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Photo extends Model
 {
@@ -20,7 +21,7 @@ class Photo extends Model
      * HasAttributesを見る限りappendメソッドでも追加できそう
      */
     protected $appends = [
-        'url',
+        'url', 'likes_count', 'liked_by_user',
     ];
 
     /** JSONに含めない属性 */
@@ -38,6 +39,7 @@ class Photo extends Model
      */
     protected $visible = [
         'id', 'owner', 'url', 'comments',
+        'likes_count', 'liked_by_user',
     ];
 
     protected $perPage = 15;
@@ -75,6 +77,22 @@ class Photo extends Model
     {
         // クラウドストレージのurlメソッドはs3の公開URLを返却する
         return Storage::cloud()->url($this->attributes['filename']);
+    }
+
+    public function getLikesCountAttribute()
+    {
+        return $this->likes->count();
+    }
+
+    public function getLikedByUserAttribute()
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return $this->likes->contains(function ($user) {
+            return $user->id === Auth::user()->id;
+        });
     }
 
     /**

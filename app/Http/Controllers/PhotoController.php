@@ -25,7 +25,7 @@ class PhotoController extends Controller
     public function index()
     {
         // TODO：serviceに切り出したい
-        $photos = Photo::with(['owner'])
+        $photos = Photo::with(['owner', 'likes'])
             ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
 
         // コントローラからインスタンスをreturnすると自動的にjsonに変換されてレスポンスが生成される
@@ -34,7 +34,8 @@ class PhotoController extends Controller
 
     public function show(string $id)
     {
-        $photo = Photo::where('id', $id)->with(['owner', 'comments.author'])->first();
+        $photo = Photo::where('id', $id)
+            ->with(['owner', 'comments.author', 'likes'])->first();
 
         return $photo ?? abort(404);
     }
